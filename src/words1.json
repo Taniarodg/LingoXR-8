@@ -1,0 +1,148 @@
+{
+  "nodes": [
+    {
+      "name": "फर्निचर",
+      "translation": "furniture",
+      "prefix": "कोठा",
+      "suffix": "उपकरण",
+      "parentCompounds": [
+        {
+          "name": "कोठा",
+          "translation": "room"
+        },
+        {
+          "name": "उपकरण",
+          "translation": "tools",
+          "compounds": [
+            {
+              "name": "काठउपकरण",
+              "translation": "woodworking tools",
+              "prefix": "काठ",
+              "suffix": "उपकरण"
+            },
+            {
+              "name": "धातु उपकरण",
+              "translation": "metalworking tools",
+              "prefix": "धातु",
+              "suffix": "उपकरण"
+            }
+          ]
+        }
+      ],
+      "compounds": [
+        {
+          "name": "बत्ती",
+          "translation": "lamp",
+          "compounds": [
+            {
+              "name": "टेबल बत्ती",
+              "translation": "table lamp",
+              "prefix": "टेबल",
+              "suffix": "बत्ती"
+            },
+            {
+              "name": "पढ्ने बत्ती",
+              "translation": "reading lamp",
+              "prefix": "पढ्ने",
+              "suffix": "बत्ती"
+            },
+            {
+              "name": "खुट्टा बत्ती",
+              "translation": "leg lamp",
+              "prefix": "खुट्टा",
+              "suffix": "बत्ती"
+            },
+            {
+              "name": "फर्श बत्ती",
+              "translation": "floor lamp",
+              "prefix": "फर्श",
+              "suffix": "बत्ती"
+            }
+          ]
+        },
+        {
+          "name": "ओछ्यान",
+          "translation": "bed",
+          "compounds": [
+            {
+              "name": "सोफा ओछ्यान",
+              "translation": "sofabed",
+              "prefix": "ओछ्यान",
+              "suffix": "सोफा"
+            }
+          ]
+        },
+        {
+          "name": "ऐना",
+          "translation": "mirror",
+          "compounds": []
+        },
+        {
+          "name": "सुत्ने ओछ्यान",
+          "translation": "bed"
+        },
+        {
+          "name": "र्याक",
+          "translation": "shelving",
+          "compounds": [
+            {
+              "name": "पुस्तक र्याक",
+              "translation": "bookshelf",
+              "prefix": "पुस्तक",
+              "suffix": "र्याक"
+            }
+          ]
+        },
+        {
+          "name": "कुर्सी",
+          "translation": "chair",
+          "compounds": [
+            {
+              "name": "काम कुर्सी",
+              "translation": "work chair",
+              "prefix": "काम",
+              "suffix": "कुर्सी"
+            },
+            {
+              "name": "आराम कुर्सी",
+              "translation": "rest chair",
+              "prefix": "आराम",
+              "suffix": "कुर्सी"
+            }
+          ],
+          "parentCompounds": [
+            {
+              "name": "आसनहरू",
+              "translation": "seats"
+            }
+          ]
+        },
+        {
+          "name": "टेबल",
+          "translation": "table",
+          "compounds": [
+            {
+              "name": "काम टेबल",
+              "translation": "working table",
+              "prefix": "काम",
+              "suffix": "टेबल"
+            },
+            {
+              "name": "भान्सा टेबल",
+              "translation": "dining table",
+              "prefix": "भान्सा",
+              "suffix": "टेबल"
+            }
+          ],
+          "parentCompounds": [
+            {
+              "name": "फर्निचरहरू",
+              "translation": "furnishings",
+              "compounds": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,177 @@
+{
+  "nodes": [
+    
+    {
+      "name": "huonekalut",
+      "translation": "furniture",
+      "prefix": "huone",
+      "suffix": "kalut",
+      "parentCompounds": [
+        {
+          "name": "huone",
+          "translation": "room",
+          "compounds": [
+            {
+              "name": "Olohuone",
+              "translation": "Living room",
+              "prefix": "Olo",
+              "suffix": "huoune"
+            },
+            {
+              "name": "Ruokailuhuone",
+              "translation": "Dining room",
+              "prefix": "Ruokailu",
+              "suffix": "huone"
+            },
+            {
+              "name": "Makuuhuone",
+              "translation": "Bedroom",
+              "prefix": "Makuu",
+              "suffix": "huone",
+              "compounds": [
+                {
+                  "name": "vuode",
+                  "translation": "bed",
+                  "compounds": [
+                    {
+                      "name": "vuodesohva",
+                      "translation": "sofabed",
+                      "prefix": "vuode",
+                      "suffix": "sohva"
+                    }
+                  ]
+                }
+              ]
+              
+            }
+          ]
+
+        },
+        {
+          "name": "kalut",
+          "translation": "tools",
+          "compounds": [
+            {
+              "name": "puutyökalut",
+              "translation": "woodworking tools",
+              "prefix": "puu",
+              "suffix": "työkalut"
+            },
+            {
+              "name": "metallityökalut",
+              "translation": "metalworking tools",
+              "prefix": "metalli",
+              "suffix": "työkalut"
+             
+            }
+          ]
+        }
+      ],
+      "compounds": [
+        {
+          "name": "lamppu",
+          "translation": "lamp",
+          "compounds": [
+            {
+              "name": "pöytälamppu",
+              "translation": "table lamp",
+              "prefix": "pöytä",
+              "suffix": "lamppu",
+              "parentCompounds": [
+                {
+                  "name": "pöytä",
+                  "translation": "table",
+                  "compounds": [
+                    {
+                      "name": "työpöytä",
+                      "translation": "working table",
+                      "prefix": "työ",
+                      "suffix": "pöytä"
+                    },
+                    {
+                      "name": "ruokapöytä",
+                      "translation": "dining table",
+                      "prefix": "ruoka",
+                      "suffix": "pöytä"
+                    }
+                  ],
+                  "parentCompounds": [
+                    {
+                      "name": "poytaparent",
+                      "translation": "furnishings",
+                      "compounds": [
+                        
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "luku lamppu",
+              "translation": "reading lamp",
+              "prefix": "luku",
+              "suffix": "lamppu"
+            },
+            {
+              "name": "jalkalamppu",
+              "translation": "leg lamp",
+              "prefix": "jalka",
+              "suffix": "lamppu"
+            },
+            {
+              "name": "lattialamppu",
+              "translation": "floor lamp",
+              "prefix": "lattia",
+              "suffix": "lamppu"
+            }
+          ]
+        },
+        {
+          "name": "vuode",
+          "translation": "bed",
+          "compounds": [
+            {
+              "name": "vuodesohva",
+              "translation": "sofabed",
+              "prefix": "vuode",
+              "suffix": "sohva"
+            }
+          ]
+        },
+        {
+          "name": "hyllystö",
+          "translation": "shelving",
+          "compounds": [
+            {
+              "name": "kirjahylly",
+              "translation": "bookshelf",
+              "prefix": "kirja",
+              "suffix": "hylly"
+            }
+          ]
+        },
+        {
+          "name": "tuoli",
+          "translation": "chair",
+          "compounds": [
+            {
+              "name": "työtuoli",
+              "translation": "work chair",
+              "prefix": "työ",
+              "suffix": "tuoli"
+            },
+            {
+              "name": "nojatuoli",
+              "translation": "rest chair",
+              "prefix": "noja",
+              "suffix": "tuoli"
+            }
+          ]
+          
+        }
+        
+      ]
+    }
+  ]
+}
