@@ -15,6 +15,7 @@ import { toast } from 'react-toastify'; // Import toast from react-toastify
 import 'react-toastify/dist/ReactToastify.css'; // Import styles for toast
 import { Dialog, DialogActions, DialogContent, DialogTitle, Button } from '@mui/material';
 import TutorialDialog from './components/TutorialDialog';
+import localWords from './words backup.json';
 
 // ==================== AUTH LOCAL ====================
 const registerUser = (username, password) => {
@@ -161,22 +162,19 @@ const App = () => {
 
 
   useEffect(() => {
-    const fetchWords = async () => {
-      try {
-        const response = await fetch('https://lingoxr.semanticcreation.com/data/nodes');
-        if (!response.ok) {
-          throw new Error(`Error fetching data: ${response.status} ${response.statusText}`);
-        }
-        const data = await response.json();
-        // console.log(data);
-        setWords(data);
-      } catch (error) {
-        console.error("Error loading nodes.json:", error);
-      }
-    };
+  setWords(localWords); // Sử dụng từ vựng từ file cục bộ
 
-    fetchWords();
-  }, []);
+  const storedName = localStorage.getItem('username');
+  if (storedName) {
+    setName(storedName);
+    setIsNameModalOpen(false);
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    const user = users.find(u => u.username === storedName);
+    if (user?.activeNodes?.length > 0) {
+      setActiveNodes(user.activeNodes);
+    }
+  }
+}, []);
   
   // const isTutorial = true;
   // Example usage: Call this function to initiate the camera move
