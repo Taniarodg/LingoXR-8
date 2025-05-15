@@ -532,9 +532,19 @@ const App = () => {
 
   }
 
+  
   const resetView = () => {
-    zoomToNode([0,0,2], activeNodes[0]); // Move to [0, 0, 3] in 3 seconds
+    if (activeNodes.length > 0 && activeNodes[0]) {
+      zoomToNode(activeNodes[0].position, activeNodes[0]);
+    } else if (words?.nodes?.length > 0) {
+      const firstNode = { ...words.nodes[0], position: [0, 0, 0], level: 0 };
+      setActiveNodes([firstNode]);
+      setTimeout(() => {
+        zoomToNode(firstNode.position, firstNode);
+      }, 100);
+    }
   }
+
 
   useEffect(() => {
     const handleBeforeUnload = (e) => {
