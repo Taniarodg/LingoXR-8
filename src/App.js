@@ -111,10 +111,26 @@ const App = () => {
   //   setTutorialSteps(initialTutorialSteps);
   // },[]);
 
-  useEffect(()=>{
-    if(words)
-     setActiveNodes([{ ...words.nodes[0], position: [0, 0, 0], level: 0 }])
-  },[words])
+  useEffect(() => {
+    setWords(localWords);
+
+    const storedName = localStorage.getItem('username');
+    if (storedName) {
+      setName(storedName);
+      setIsNameModalOpen(false);
+
+      const users = JSON.parse(localStorage.getItem('users')) || [];
+      const user = users.find(u => u.username === storedName);
+
+      if (user?.activeNodes?.length > 0) {
+        setActiveNodes(user.activeNodes);
+      } else {
+        setActiveNodes([{ ...localWords.nodes[0], position: [0, 0, 0], level: 0 }]);
+      }
+    } else {
+      setActiveNodes([{ ...localWords.nodes[0], position: [0, 0, 0], level: 0 }]);
+    }
+  }, []); 
 
   // useEffect(() => {
     // Check if tutorial progress is saved in localStorage
@@ -172,6 +188,9 @@ const App = () => {
     const user = users.find(u => u.username === storedName);
     if (user?.activeNodes?.length > 0) {
       setActiveNodes(user.activeNodes);
+      localStorage.setItem("users", JSON.stringify(users.map(u => 
+        u.username === storedName ? { ...u, activeNodes: user.activeNodes } : u
+      )));      
     }
   }
 }, []);

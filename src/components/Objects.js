@@ -3,88 +3,66 @@ import { useRef, useMemo } from 'react';
 
 import { useFrame, useLoader } from '@react-three/fiber';
 import { Line as DreiLine, Plane, Sparkles } from '@react-three/drei';
-import { TextureLoader } from 'three'; // Import TextureLoader
+import { TextureLoader } from 'three';
 import { Ring } from '@react-three/drei';
 import { Text } from '@react-three/drei';
 import * as THREE from 'three';
 import {  Sphere } from '@react-three/drei';
 import FakeGlowMaterial from './FakeGlowMaterial';
-import { createIconTexture } from '../utils/createIconTexture'; // Helper function
+import { createIconTexture } from '../utils/createIconTexture';
 
 export const Node = ({ name, translation, suffix, prefix, position, level, onClick, color, compoundsCount, onDelete, onInformationClick, zoomToNode, link }) => {
-
   const [showIcons, setShowIcons] = useState(false);
-  const [opacity, setOpacity] = useState(0); // Initial opacity set to 0 (invisible)
-  const [isHovered, setIsHovered] = useState(false); // New state for hover
-  const fadeDuration = 0.05; // Adjust fade speed
+  const [opacity, setOpacity] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
+  const fadeDuration = 0.05;
   const [prefixWidth, setPrefixWidth] = useState(0);
   const [showTranslation, setShowTranslation] = useState(false);
-
   const nodeRef = useRef();
-  let timerRef = useRef(null); // Store the timer reference
+  let timerRef = useRef(null);
   const prefixRef = useRef();
 
   const radius = 0.2 * Math.pow(1, level);
-  const iconSize = 0.05; // Adjust size of icons
-  
+  const iconSize = 0.05;
   const prefixXPos = -0.05;
   const fontSize = 0.04 * Math.pow(0.7, level);
-  const suffixXPos = prefixWidth / 2 * 0.5 *(level/2+1); // Adjust padding if necessary
-  const backgroundPadding = 0.02; // Extra padding around the text
-  const borderThickness = 0.005; // Thickness of the white border
+  const suffixXPos = prefixWidth / 2 * 0.5 *(level/2+1);
 
-  // Fade-in effect on click
   useFrame(() => {
     if (showIcons && opacity < 1) {
       setOpacity((prev) => Math.min(prev + fadeDuration, 1));
     }
   });
 
-  const raycastableLayer = 1; // Custom layer
-
-  const handleHover = () => {
-    setShowTranslation(true);
-  };
-  
-  const handleUnhover = () => {
-    setShowTranslation(false);
-  };
-  
+  const handleHover = () => setShowTranslation(true);
+  const handleUnhover = () => setShowTranslation(false);
 
   const handleNodeClick = (e) => {
-    e.stopPropagation(); // Prevents event from affecting other nodes
+    e.stopPropagation();
     zoomToNode(position, nodeRef.current);
     if (showIcons) {
-      // Icons are currently visible
       setShowIcons(false);
       setOpacity(0);
-      clearTimeout(timerRef.current); // Clear the timer if it's currently running
-
-      // Trigger fade-out if icons are already showing
+      clearTimeout(timerRef.current);
       const fadeOutInterval = setInterval(() => {
         setOpacity((prev) => {
           if (prev <= 0) {
             clearInterval(fadeOutInterval);
-            setShowIcons(false); // Hide icons completely
+            setShowIcons(false);
             return 0;
           }
-          return prev - fadeDuration; // Gradually decrease opacity
+          return prev - fadeDuration;
         });
       }, 5);
     } else {
-      // Icons are not visible
       setShowIcons(true);
       setOpacity(0);
-      timerRef.current = setTimeout(() => {
-        setShowIcons(false); // Automatically hide icons after 7 seconds
-      }, 5000); // 7 seconds
+      timerRef.current = setTimeout(() => setShowIcons(false), 5000);
     }
   };
 
-  // Memoize icon textures so they are only created once
   const textures = useMemo(() => {
     const loader = new TextureLoader();
-
     return {
       information: loader.load('/icons/information.png'),
       face: loader.load('/icons/add.png'),
@@ -94,51 +72,38 @@ export const Node = ({ name, translation, suffix, prefix, position, level, onCli
     };
   }, []);
 
-  // Function to handle text-to-speech for node name
   const handleSpeak = () => {
-    const utterance = new SpeechSynthesisUtterance(name); // Create a new utterance for the word
-    utterance.lang = 'fi-FI'; // Set the language to Finnish
+    const utterance = new SpeechSynthesisUtterance(name);
+    utterance.lang = 'fi-FI';
     utterance.volume = 1.0;
     utterance.rate = 0.6;
     const voices = window.speechSynthesis.getVoices();
-    const finnishVoice = voices.filter(voice => voice.lang === 'fi-FI');
-    if (finnishVoice) {
-      utterance.voice = finnishVoice[0]; // Set the voice to the Finnish voice
-    }
+    const finnishVoice = voices.find(voice => voice.lang === 'fi-FI');
+    if (finnishVoice) utterance.voice = finnishVoice;
     window.speechSynthesis.speak(utterance);
   };
 
-  // Clean up timer on component unmount
-  React.useEffect(() => {
-    return () => {
-      clearTimeout(timerRef.current); // Clear the timer if component unmounts
-    };
+  useEffect(() => {
+    return () => clearTimeout(timerRef.current);
   }, []);
 
   useEffect(() => {
-    // console.log(nodeRef.current);
-    // Measure the width of the prefix text after the component mounts
     if (prefixRef.current) {
-      setPrefixWidth(prefixRef.current.text.length *  0.10 * 1/(level+1)); // Adjust multiplier if needed
+      setPrefixWidth(prefixRef.current.text.length *  0.10 * 1/(level+1));
     }
   }, [prefix]);
 
-  
   return (
     <group position={position} ref={nodeRef}>
       <Sparkles count={3} scale={0.1} size={10} speed={1} opacity={0.1} color="#43d9ff" />
 
-      <Sphere
-        args={[0.45 / (level + 1), 32, 32]}
-        position={[0, 0, 0]}
-      >
-        <Sphere 
-          args={[0.1 / (level + 2), 32, 32]} 
-          position={[0, 0, 0]} 
-          // ref={(mesh) => mesh?.layers.set(raycastableLayer)}
-          onClick={(e) => { handleNodeClick(e) }}
-          onPointerOver={() => { setIsHovered(true); handleHover(); }} // Set hover state on pointer over
-          onPointerOut={() => {setIsHovered(false); handleUnhover(); }}
+      <Sphere args={[0.45 / (level + 1), 32, 32]} position={[0, 0, 0]}>
+        <Sphere
+          args={[0.1 / (level + 2), 32, 32]}
+          position={[0, 0, 0]}
+          onClick={handleNodeClick}
+          onPointerOver={() => { setIsHovered(true); handleHover(); }}
+          onPointerOut={() => { setIsHovered(false); handleUnhover(); }}
         >
           <meshStandardMaterial emissive="white" emissiveIntensity={0.1} roughness={0} color={color} />
         </Sphere>
@@ -148,80 +113,42 @@ export const Node = ({ name, translation, suffix, prefix, position, level, onCli
 
       {showIcons && (
         <>
-          <sprite onClick={onInformationClick} position={[1 / (level + 1) * 0.2, 1 / (level + 1) * 0.2, 1 / (level + 1) * 0]} scale={[2 / (level + 1) * iconSize, 2 / (level + 1) * iconSize, 1]}>
+          <sprite onClick={onInformationClick} position={[0.2 / (level + 1), 0.2 / (level + 1), 0]} scale={[iconSize, iconSize, 1]}>
             <spriteMaterial map={textures.information} />
           </sprite>
-          {compoundsCount && <sprite position={[1 / (level + 1) * 0.3, 1 / (level + 1) * 0.1, 0]} scale={[2 / (level + 1) * iconSize, 2 / (level + 1) * iconSize, 1]} onClick={onClick}>
-            <spriteMaterial map={textures.face} />
-          </sprite>}
-          <sprite onClick={handleSpeak} position={[1 / (level + 1) * 0.3, 1 / (level + 1) * -0.05, 0]} scale={[2 / (level + 1) * iconSize, 2 / (level + 1) * iconSize, 1]}>
+          {compoundsCount && (
+            <sprite position={[0.3 / (level + 1), 0.1 / (level + 1), 0]} scale={[iconSize, iconSize, 1]} onClick={onClick}>
+              <spriteMaterial map={textures.face} />
+            </sprite>
+          )}
+          <sprite onClick={handleSpeak} position={[0.3 / (level + 1), -0.05 / (level + 1), 0]} scale={[iconSize, iconSize, 1]}>
             <spriteMaterial map={textures.speak} />
           </sprite>
-          <sprite onClick={onDelete} position={[1 / (level + 1) * 0.2, 1 / (level + 1) * -0.13, 0]} scale={[2 / (level + 1) * iconSize, 2 / (level + 1) * iconSize, 1]}>
+          <sprite onClick={onDelete} position={[0.2 / (level + 1), -0.13 / (level + 1), 0]} scale={[iconSize, iconSize, 1]}>
             <spriteMaterial map={textures.delete} />
           </sprite>
-
-          {link && <sprite position={[1 / (level + 1) * 0.07, 1 / (level + 1) * -0.2, 0]} scale={[2 / (level + 1) * iconSize, 2 / (level + 1) * iconSize, 1]} onClick={() => window.open(link, "_blank")}>
-            <spriteMaterial color={"white"} map={textures.link} />
-          </sprite>}
+          {link && (
+            <sprite position={[0.07 / (level + 1), -0.2 / (level + 1), 0]} scale={[iconSize, iconSize, 1]} onClick={() => window.open(link, '_blank')}>
+              <spriteMaterial color="white" map={textures.link} />
+            </sprite>
+          )}
         </>
       )}
 
-      {/* Conditionally render the Text component based on hover state */}
-      {
-        prefix &&
-      // isHovered && 
-      (
+      {prefix && suffix ? (
         <>
-           <>
-             {/* Prefix Background Border */}
-            <Plane
-              position={[prefixXPos, radius * Math.pow(0.7, level), -0.02]} // Behind the prefix text
-              args={[
-                prefix.length * fontSize * 0.8   + borderThickness, // Width with padding and border
-                fontSize + backgroundPadding + borderThickness, // Height with padding and border
-              ]}
-            >
-              <meshStandardMaterial  color="black" />
-            </Plane>
-
-            {/* Prefix Black Background */}
-            <Plane
-              position={[prefixXPos, radius * Math.pow(0.7, level), -0.019]} // Slightly in front of the border
-              args={[
-                prefix.length * fontSize * 0.8 , // Width based on prefix length
-                fontSize + backgroundPadding, // Height
-              ]}
-            >
-              <meshStandardMaterial opacity={0.3} color="white" />
-            </Plane>
-
-            {/* Prefix Text */}
-            <Text
-              ref={prefixRef}
-              position={[prefixXPos, radius * Math.pow(0.7, level),  -0.016]}
-              fontSize={fontSize}
-              color="black"
-              anchorX="center"
-              anchorY="middle"
-              // color="black"
-            >
-              {prefix}
-            </Text>
-           {/* Suffix Background */}
-          <Plane
-            position={[suffixXPos*0.9 * 0.9/(level ==0 ? 0.8 : level+1), radius * Math.pow(0.7, level), -0.02]} // Slight offset to prevent z-fighting
-            args={[
-              suffix.length * fontSize * 0.8 , // Width based on suffix length
-              fontSize + backgroundPadding+borderThickness, // Height
-            ]}
-          >
-            <meshStandardMaterial color="black" />
-          </Plane>
-
-          {/* Suffix Text */}
           <Text
-            position={[suffixXPos * 1/(level+1), radius * Math.pow(0.7, level), -0.016]}
+            ref={prefixRef}
+            position={[-0.03, radius, -0.016]}
+            fontSize={fontSize}
+            color="yellow"
+            anchorX="center"
+            anchorY="middle"
+          >
+            {prefix}
+          </Text>
+          <Text
+            position={[0.04, radius, -0.016]}
             fontSize={fontSize}
             color="white"
             anchorX="center"
@@ -229,28 +156,27 @@ export const Node = ({ name, translation, suffix, prefix, position, level, onCli
           >
             {suffix}
           </Text>
-          </>
         </>
-      )}
-
-    {
-      !prefix  &&
-      // isHovered && 
-      (
-        <Text position={[0, radius*Math.pow(0.7, level), 0]} fontSize={0.05 * Math.pow(0.7, level)} color="white" anchorX="center" anchorY="middle">
+      ) : (
+        <Text
+          position={[0, radius, 0]}
+          fontSize={fontSize}
+          color="white"
+          anchorX="center"
+          anchorY="middle"
+        >
           {name}
         </Text>
       )}
 
       {showTranslation && translation && (
-        <Text position={[0, radius * Math.pow(0.7, level)+0.07, 0]} fontSize={0.04 * Math.pow(0.7, level)} color="white" anchorX="center" anchorY="middle">
+        <Text position={[0, radius + 0.07, 0]} fontSize={0.04 * Math.pow(0.7, level)} color="white" anchorX="center" anchorY="middle">
           {translation}
         </Text>
       )}
     </group>
   );
 };
-
 
 export const LineBetweenNodes = ({ start, end, isHovered }) => {
   const points = [start, end];

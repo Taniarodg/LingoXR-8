@@ -3,43 +3,95 @@
     {
       "name": "huonekalut",
       "translation": "furniture",
+      "prefix": "huone",
+      "suffix": "kalut",
       "compounds": [
         {
           "name": "tuoli",
           "translation": "chair",
           "compounds": [
-            {"name": "työtuoli", "translation": "work chair"},
-            {"name": "nojatuoli", "translation": "rest chair"},
-            {"name": "jalkatuoli", "translation": "leg chair"}
+            {
+              "name": "työtuoli",
+              "translation": "work chair"
+            },
+            {
+              "name": "nojatuoli",
+              "translation": "rest chair"
+            },
+            {
+              "name": "jalkatuoli",
+              "translation": "leg chair"
+            }
           ]
         },
         {
           "name": "lamppu",
           "translation": "lamp",
           "compounds": [
-            {"name": "pöytälamppu", "translation": "table lamp"},
-            {"name": "luku lamppu", "translation": "reading lamp"},
-            {"name": "jalkalamppu", "translation": "leg lamp"},
-            {"name": "lattialamppu", "translation": "floor lamp"}
+            {
+              "name": "pöytälamppu",
+              "translation": "table lamp",
+              "prefix": "lamppu",
+              "suffix": "pöytä"
+            },
+            {
+              "name": "luku lamppu",
+              "translation": "reading lamp",
+              "prefix": "lamppu",
+              "suffix": "luku"
+            },
+            {
+              "name": "jalkalamppu",
+              "translation": "leg lamp",
+              "prefix": "lamppu",
+              "suffix": "jalka"
+            },
+            {
+              "name": "lattialamppu",
+              "translation": "floor lamp",
+              "prefix": "lamppu",
+              "suffix": "lattia"
+            }
           ]
         },
         {
           "name": "pöytä",
           "translation": "table",
           "compounds": [
-            {"name": "työpöytä", "translation": "working table"},
-            {"name": "ruokapöytä", "translation": "dining table"},
-            {"name": "sohvapöytä", "translation": "sofa table"},
-            {"name": "yöpöytä", "translation": "night table"},
-            {"name": "kirjoituspöytä", "translation": "writing table"}
+            {
+              "name": "työpöytä",
+              "translation": "working table"
+            },
+            {
+              "name": "ruokapöytä",
+              "translation": "dining table"
+            },
+            {
+              "name": "sohvapöytä",
+              "translation": "sofa table"
+            },
+            {
+              "name": "yöpöytä",
+              "translation": "night table"
+            },
+            {
+              "name": "kirjoituspöytä",
+              "translation": "writing table"
+            }
           ]
         },
         {
           "name": "vuode",
           "translation": "bed",
           "compounds": [
-            {"name": "vuodesohva", "translation": "sofabed"},
-            {"name": "sänky", "translation": "bed"}
+            {
+              "name": "vuodesohva",
+              "translation": "sofabed"
+            },
+            {
+              "name": "sänky",
+              "translation": "bed"
+            }
           ]
         },
         {
@@ -51,7 +103,10 @@
           "name": "hyllystö",
           "translation": "shelving",
           "compounds": [
-            {"name": "kirjahylly", "translation": "bookshelf"}
+            {
+              "name": "kirjahylly",
+              "translation": "bookshelf"
+            }
           ]
         }
       ]
