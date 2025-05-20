@@ -15,7 +15,7 @@ import { toast } from 'react-toastify'; // Import toast from react-toastify
 import 'react-toastify/dist/ReactToastify.css'; // Import styles for toast
 import { Dialog, DialogActions, DialogContent, DialogTitle, Button } from '@mui/material';
 import TutorialDialog from './components/TutorialDialog';
-import localWords from './words backup.json';
+import localWords from './words backup.json'
 
 // ==================== AUTH LOCAL ====================
 const registerUser = (username, password) => {

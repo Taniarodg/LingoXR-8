@@ -139,7 +139,7 @@ export const Node = ({ name, translation, suffix, prefix, position, level, onCli
         <>
           <Text
             ref={prefixRef}
-            position={[-0.03, radius, -0.016]}
+            position={[-prefix.length * fontSize * 0.4, radius, -0.016]}
             fontSize={fontSize}
             color="yellow"
             anchorX="center"
@@ -148,7 +148,7 @@ export const Node = ({ name, translation, suffix, prefix, position, level, onCli
             {prefix}
           </Text>
           <Text
-            position={[0.04, radius, -0.016]}
+            position={[suffix.length * fontSize * 0.15, radius, -0.016]}
             fontSize={fontSize}
             color="white"
             anchorX="center"
